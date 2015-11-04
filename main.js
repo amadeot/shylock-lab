@@ -2,6 +2,7 @@ $(document).ready(function(){
 	console.log('linked!');
 	var ducats = 10000//starting ducat value
 	var debtKeeper =[]//this is the debtor prison where all the debtors live with how much they owe
+	var interestRate = .35//this is the interest rate
 	var submit = function(event){
 		if (event.keyCode===13){//hit enter
 			console.log('great job pressing enter');//confirm
@@ -34,6 +35,13 @@ $(document).ready(function(){
 				respond('*ShylockBot pulls out his ledger')//pulls out his robe and wizard hat
 				for(i=0;i<debtKeeper.length;i++){//for loop to cycle through all debtors
 					respond(debtKeeper[i].debtorName+' owes me '+debtKeeper[i].debt+' ducats')//responds with the name and amount owed of each debtor
+				}
+			} else if ($value==='collect interest'){//if collect interest is typed in
+				respond('*ShylockBot collects interest at '+interestRate+'%*')//this lets you know what the current interest rate is at
+				for(i=0;i<debtKeeper.length;i++){//for loop to get through the debtors
+					var newDebt = parseInt(debtKeeper[i].debt)+parseInt(debtKeeper[i].debt*interestRate)//this sets what the new debt is
+					debtKeeper[i].debt = newDebt//this sets the new debt as the current debt
+					respond(debtKeeper[i].debtorName+' now owes me '+debtKeeper[i].debt+' ducats')//this responds with what everyone owes now
 				}
 			}
 
