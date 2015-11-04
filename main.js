@@ -37,7 +37,7 @@ $(document).ready(function(){
 					respond(debtKeeper[i].debtorName+' owes me '+debtKeeper[i].debt+' ducats');//responds with the name and amount owed of each debtor
 				}
 			} else if ($value==='collect interest'){//if collect interest is typed in
-				respond('*ShylockBot collects interest at '+interestRate+'%*');//this lets you know what the current interest rate is at
+				respond('*ShylockBot collects interest at '+interestRate*100+'%*');//this lets you know what the current interest rate is at
 				for(i=0;i<debtKeeper.length;i++){//for loop to get through the debtors
 					var newDebt = parseInt(debtKeeper[i].debt)+parseInt(debtKeeper[i].debt*interestRate);//this sets what the new debt is
 					debtKeeper[i].debt = newDebt;//this sets the new debt as the current debt
@@ -50,6 +50,14 @@ $(document).ready(function(){
 //** for later use: whenever I tried to switch it up so that interest rate was a whole number on its' own
 //and only changed into a decimal to calculate interest, it broke the code. Figure out why later **
 				respond('*ShylockBot adjusts his interest rate from '+(prevInterestRate*100)+'% to '+(interestRate*100)+'%*')
+			} else if ($valueArray[0]==='collect'){
+				for(i=0;i<debtKeeper.length;i++){
+					if (debtKeeper[i].debtorName = $valueArray[4]){
+						debtKeeper[i].debt -= parseInt($valueArray[1])
+						ducats += parseInt($valueArray[1])
+						return respond('*Shylock opens his purse, '+debtKeeper[i].debtorName+' gives him '+$valueArray[1]+' ducats. They still owe ShylockBot '+debtKeeper[i].debt+' ducats*')
+					}
+				}
 			}
 
 		}
